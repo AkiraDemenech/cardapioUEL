@@ -1,8 +1,11 @@
 
+print('Importando tweepy')
 import tweepy
 
+print('Importando chaves')
 from twitter_keys import *
 
+print('Autenticando....')
 client = tweepy.Client(
 #	bearer_token = bearer_token,
 	consumer_key = consumer_key, 
@@ -12,8 +15,11 @@ client = tweepy.Client(
 )
 
 text = 'Olá, mundo!'
+print('Postando', text)
 t = client.create_tweet(text=text)
 
 print(t)
 print('\n', dir(t))
 
+print('\n\n', t.data['id'])
+print('\t', t.data['text'])
