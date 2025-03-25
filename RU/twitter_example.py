@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 
 print('Importando tweepy')
 import tweepy

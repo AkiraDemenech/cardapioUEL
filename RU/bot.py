@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 
 arquivo = 'leitura.log'
 post = 'post.log'
