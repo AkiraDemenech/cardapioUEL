@@ -21,7 +21,7 @@ try:
 	a = uel.cardapio((0, ln) for ln in open(arquivo, 'r'))
 except FileNotFoundError:	
 	print(arquivo, 'ainda não existente')
-	a = {}
+	a = {}	
 
 try:
 	print('Lendo da web....')
@@ -34,7 +34,16 @@ try:
 	c = uel.cardapio(t)
 except:	
 	print('Erro na leitura online, utilizando a última leitura registrada')
-	c = a
+	c = {}
+print(c)
+if len(c): 	
+	print(a)
+else:	
+	print('Cardápio vazio!', len(a))
+	c = {	# cópia de a
+		d: list(a[d])
+		for d in a
+	}
 
 arq = open(arquivo, 'w')
 for d in c:
