@@ -80,6 +80,7 @@ if hoje in c:
 		print(anterior)
 	except:	
 		print('Não foi possível resgatar registro do último post no arquivo',post)
+		anterior = ''
 
 	if anterior == texto: 
 		print('Já postado, não repetiremos')
@@ -101,3 +102,4 @@ if hoje in c:
 else:
 	print('Nenhum cardápio para hoje')
 		
+print('Bom final de programa!')		
