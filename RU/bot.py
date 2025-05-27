@@ -81,33 +81,45 @@ if hoje in c:
 	texto = '\n'.join(ln[0].upper() + ln[1:].lower() for ln in [' '.join(p) for p in c[hoje]])
 	print(repr(texto))
 	print(texto)
+	
+	separador = '!\t'
+	redes = anterior = ''
 
 	try:
 		print('Lendo post anterior no arquivo',post)
-		anterior = open(post, 'r').read()	
-		print(repr(anterior))
-		print(anterior)
+		anterior = open(post, 'r').read()					
 	except:	
 		print('Não foi possível resgatar registro do último post no arquivo',post)
-		anterior = ''
+		
+	registro = open(post, 'w')					
+	print(repr(anterior))
+	
+	if separador in anterior:
+		redes, anterior = anterior.split(separador, 1)
+	print(anterior)		
+	print(redes)
+	
+	for r, post in {
+		('Bluesky', bsky.post),
+		('Twitter', twitter.post)
+	}:				
+		if r in redes and anterior == texto:
+			print('Já postado no',r)
+		else:	
+		
+			print('Postando no',r,'....')	
 
-	if anterior == texto: 
-		print('Já postado, não repetiremos')
-	else:	# se ainda não postou exatamente isso (houve alteração no cardápio ou é o primeiro post do dia)
-		print('Postando....')	
-
-		try:
-			print('Primeiro no Bluesky')
-			bsky.post(texto) 
-		except:
-			print('Falha ao postar no Bluesky!') # se der certo, mas o twitter não, vai repetir o post aqui depois 	 
-
-		try:		
-			print('Depois no Twitter')	
-			twitter.post(texto)			
-			print(end=texto, file=open(post, 'w')) # registra o último post feito (se foi tuitado com sucesso)
-		except:	
-			print('Falha ao postar no Twitter!')
+			try:
+				post(texto)
+			 		
+			except:
+				print('Falha ao postar no ',r,'!') 	 
+				r = ''
+			
+		print(r, file=registro)	
+		
+	print(separador, end=texto, file=registro) 	
+	registro = None
 else:
 	print('Nenhum cardápio para hoje')
 		
